@@ -1,5 +1,5 @@
-# Imagen base con PHP 8.3 + FPM
-FROM php:8.3-fpm AS base
+# Imagen base con PHP 8.4 + FPM
+FROM php:8.4-fpm AS base
 
 # Instalar dependencias del sistema y extensiones de PHP
 RUN apt-get update && apt-get install -y --no-install-recommends \
