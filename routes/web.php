@@ -129,6 +129,13 @@ Route::group([], function () {
             Route::get('/notifications', [\App\Http\Controllers\Admin\NotificationController::class, 'index'])->name('tenant.admin.notifications.index');
             Route::post('/notifications/mark-all-read', [\App\Http\Controllers\Admin\NotificationController::class, 'markAllRead'])->name('tenant.admin.notifications.markAllRead');
             Route::get('/notifications/{id}/read', [\App\Http\Controllers\Admin\NotificationController::class, 'markRead'])->name('tenant.admin.notifications.markRead');
+
+            // API ligera para polling de notificaciones (Alpine.js)
+            Route::get('/api/notifications/unread-count', function () {
+                return response()->json([
+                    'count' => auth()->user()->unreadNotifications()->count(),
+                ]);
+            })->name('tenant.admin.api.notifications.unreadCount');
         });
     });
 });

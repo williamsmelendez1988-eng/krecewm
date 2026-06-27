@@ -385,6 +385,81 @@
 </section>
 
 {{-- ══════════════════════════════════════════════════════════════════ --}}
+{{-- PROBAR DEMO — Solo visible en entorno local de desarrollo --}}
+{{-- ══════════════════════════════════════════════════════════════════ --}}
+@if(app()->environment('local'))
+<section id="demo" class="py-24 bg-slate-950 border-t border-dashed border-indigo-500/30">
+    <div class="mx-auto max-w-4xl px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <div class="inline-flex items-center gap-2 rounded-full border border-amber-500/30 bg-amber-500/10 px-4 py-1.5 text-sm font-medium text-amber-300 mb-4">
+                <span class="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse"></span>
+                Entorno de Desarrollo
+            </div>
+            <h2 class="text-3xl font-black text-white">🧪 Probar Demo</h2>
+            <p class="mt-3 text-slate-400 max-w-xl mx-auto">
+                Accede directamente a las tiendas demo sin necesidad de configurar el archivo hosts.
+                Haz clic en una tarjeta para entrar como inquilino.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto">
+            {{-- Demo Tenant: Ferretería Central Demo --}}
+            <a href="/dev/switch-tenant/demo"
+               class="group block rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 hover:border-indigo-500/40 hover:shadow-xl hover:shadow-indigo-500/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-violet-600 text-2xl shadow-lg">
+                        🔩
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-indigo-300 transition-colors">Ferretería Central Demo</h3>
+                        <p class="text-xs text-slate-500 font-mono">demo.krecewm.test</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                    Tienda de ferretería con catálogo de ejemplo, pedidos de prueba y configuración de pago móvil.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-semibold text-indigo-400 group-hover:text-indigo-300 transition-colors">
+                    Entrar al panel
+                    <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </div>
+            </a>
+
+            {{-- Demo Tenant: Repuestos López --}}
+            <a href="/dev/switch-tenant/repuestos"
+               class="group block rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-900/80 p-6 hover:border-emerald-500/40 hover:shadow-xl hover:shadow-emerald-500/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center gap-4 mb-4">
+                    <div class="flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 text-2xl shadow-lg">
+                        🔧
+                    </div>
+                    <div>
+                        <h3 class="text-lg font-bold text-white group-hover:text-emerald-300 transition-colors">Repuestos López</h3>
+                        <p class="text-xs text-slate-500 font-mono">repuestos.krecewm.test</p>
+                    </div>
+                </div>
+                <p class="text-sm text-slate-400 leading-relaxed mb-4">
+                    Tienda de repuestos automotrices con inventario extenso, búsqueda por código OEM y precios USD/Bs.
+                </p>
+                <div class="flex items-center gap-2 text-xs font-semibold text-emerald-400 group-hover:text-emerald-300 transition-colors">
+                    Entrar al panel
+                    <svg class="h-4 w-4 transform group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+                    </svg>
+                </div>
+            </a>
+        </div>
+
+        <div class="text-center mt-8">
+            <p class="text-xs text-slate-600">
+                ⚠️ Esta sección solo aparece cuando <code class="px-1.5 py-0.5 bg-slate-800 rounded text-amber-400 text-[10px]">APP_ENV=local</code>
+            </p>
+        </div>
+    </div>
+</section>
+@endif
+
+{{-- ══════════════════════════════════════════════════════════════════ --}}
 {{-- CTA FINAL + CONTACTO --}}
 {{-- ══════════════════════════════════════════════════════════════════ --}}
 <section id="contacto" class="py-24 bg-slate-950">

@@ -237,19 +237,32 @@
                     </div>
                     <div class="ml-4 flex items-center gap-2 md:ml-6">
 
-                        {{-- 🔔 Campana de Notificaciones --}}
-                        <div x-data="{ open: false }" class="relative">
+                        {{-- 🔔 Campana de Notificaciones con Polling cada 30s --}}
+                        <div x-data="{
+                                open: false,
+                                unreadCount: {{ auth()->user()->unreadNotifications->count() }},
+                                fetchUnreadCount() {
+                                    fetch('/admin/api/notifications/unread-count', {
+                                        headers: { 'Accept': 'application/json', 'X-Requested-With': 'XMLHttpRequest' }
+                                    })
+                                    .then(r => r.ok ? r.json() : null)
+                                    .then(data => { if (data) this.unreadCount = data.count; })
+                                    .catch(() => {});
+                                },
+                                init() {
+                                    setInterval(() => this.fetchUnreadCount(), 30000);
+                                }
+                            }" class="relative">
                             <button @click="open = !open"
                                 class="relative flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-700 transition-colors focus:outline-none">
                                 <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                                 </svg>
-                                @php $unreadCount = auth()->user()->unreadNotifications->count(); @endphp
-                                @if($unreadCount > 0)
-                                <span class="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white">
-                                    {{ $unreadCount > 9 ? '9+' : $unreadCount }}
-                                </span>
-                                @endif
+                                <span x-show="unreadCount > 0"
+                                      x-text="unreadCount > 9 ? '9+' : unreadCount"
+                                      class="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-500 text-[9px] font-bold text-white"
+                                      x-transition
+                                      style="display: none;"></span>
                             </button>
 
                             {{-- Dropdown de últimas notificaciones --}}
@@ -258,9 +271,10 @@
                                 style="display: none;">
                                 <div class="flex items-center justify-between px-4 py-3 bg-slate-900">
                                     <span class="text-sm font-semibold text-white">Notificaciones</span>
-                                    @if($unreadCount > 0)
-                                    <span class="text-xs font-bold text-white bg-rose-500 rounded-full px-1.5 py-0.5">{{ $unreadCount }} nuevas</span>
-                                    @endif
+                                    <span x-show="unreadCount > 0"
+                                          x-text="unreadCount + ' nuevas'"
+                                          class="text-xs font-bold text-white bg-rose-500 rounded-full px-1.5 py-0.5"
+                                          style="display: none;"></span>
                                 </div>
                                 <div class="divide-y divide-slate-100 max-h-72 overflow-y-auto">
                                     @forelse(auth()->user()->notifications()->latest()->limit(5)->get() as $notif)

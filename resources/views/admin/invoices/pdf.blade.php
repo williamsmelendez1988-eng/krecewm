@@ -248,6 +248,9 @@
     <div class="header">
         <div class="header-top">
             <div>
+                @if(!empty($logoBase64))
+                    <img src="{{ $logoBase64 }}" alt="{{ $tenant->name }}" style="max-height: 48px; max-width: 180px; margin-bottom: 6px;">
+                @endif
                 <div class="brand-name">{{ $tenant->name }}</div>
                 <div class="brand-sub">
                     {{ $tenant->city ?? '' }}{{ $tenant->city && $tenant->contact_phone ? ' · ' : '' }}{{ $tenant->contact_phone ?? '' }}
