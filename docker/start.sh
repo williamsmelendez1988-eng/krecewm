@@ -6,6 +6,13 @@ echo "🚀 Iniciando KreceWM..."
 # Crear un archivo .env vacío si no existe para evitar fallas de escritura física de comandos
 touch .env
 
+# Configurar puerto dinámico de Railway para Nginx
+if [ -n "$PORT" ]; then
+    echo "🌐 Configurando Nginx para escuchar en el puerto $PORT..."
+    sed -i "s/listen 80 default_server;/listen $PORT default_server;/g" /etc/nginx/sites-available/default
+    sed -i "s/listen \[::\]:80 default_server;/listen \[::\]:$PORT default_server;/g" /etc/nginx/sites-available/default
+fi
+
 # Generar key si no existe
 if [ -z "$APP_KEY" ]; then
     echo "🔑 Generando APP_KEY..."
