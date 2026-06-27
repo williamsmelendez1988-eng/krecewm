@@ -16,8 +16,10 @@ return Application::configure(basePath: dirname(__DIR__))
             \App\Http\Middleware\IdentifyTenant::class,
         ]);
         $middleware->alias([
-            'superadmin' => \App\Http\Middleware\CheckSuperAdmin::class,
-            'tenant.admin' => \App\Http\Middleware\CheckTenantAdmin::class,
+            'superadmin'       => \App\Http\Middleware\CheckSuperAdmin::class,
+            'tenant.admin'     => \App\Http\Middleware\CheckTenantAdmin::class,
+            'require.tenant'   => \App\Http\Middleware\RequireTenant::class,
+            'require.central'  => \App\Http\Middleware\RequireCentralDomain::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

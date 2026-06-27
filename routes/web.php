@@ -44,12 +44,7 @@ Route::group([], function () {
     Route::get('/', [CatalogController::class, 'index'])->name('catalog.index');
 
     // Rutas específicas del Tenant resuelto
-    Route::group(['middleware' => function ($request, $next) {
-        if (!TenantManager::hasTenant()) {
-            abort(404);
-        }
-        return $next($request);
-    }], function () {
+    Route::group(['middleware' => 'require.tenant'], function () {
         
         // Autenticación Administrativa Local de la Tienda
         Route::get('/admin/login', [LoginController::class, 'showLoginForm'])->name('tenant.admin.login');
@@ -143,13 +138,7 @@ Route::group([], function () {
 // =========================================================================
 // 2. RUTAS DEL DOMINIO CENTRAL (Solo si NO hay Tenant resuelto)
 // =========================================================================
-Route::group(['middleware' => function ($request, $next) {
-    if (TenantManager::hasTenant()) {
-        // Si hay tenant, estas rutas no están disponibles en este subdominio
-        abort(404);
-    }
-    return $next($request);
-}], function () {
+Route::group(['middleware' => 'require.central'], function () {
 
     // Autenticación Central (Super Administrador KreceWM)
     Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
