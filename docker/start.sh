@@ -3,6 +3,9 @@ set -e
 
 echo "🚀 Iniciando KreceWM..."
 
+# Crear un archivo .env vacío si no existe para evitar fallas de escritura física de comandos
+touch .env
+
 # Generar key si no existe
 if [ -z "$APP_KEY" ]; then
     echo "🔑 Generando APP_KEY..."
