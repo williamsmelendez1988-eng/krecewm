@@ -34,6 +34,11 @@ php artisan db:seed --force 2>/dev/null || true
 echo "⚡ Optimizando para producción..."
 php artisan optimize
 
+# Asegurar permisos correctos para el usuario del servidor web (www-data)
+echo "🔒 Ajustando permisos de almacenamiento..."
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R 775 storage bootstrap/cache
+
 echo "✅ KreceWM listo. Iniciando servidores..."
 
 # Iniciar Supervisor (que maneja Nginx + PHP-FPM)
